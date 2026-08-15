@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-oat-100 text-espresso-900 font-sans antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Custom scrollbars for clean UI */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(30, 27, 24, 0.03);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(30, 27, 24, 0.15);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(30, 27, 24, 0.25);
+}
+
+/* Hide scrollbar for category pills on mobile while allowing swipe */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Print styling for QR Table Standee */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-qr-standee, #printable-qr-standee * {
+    visibility: visible;
+  }
+  #printable-qr-standee {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+  }
+}
