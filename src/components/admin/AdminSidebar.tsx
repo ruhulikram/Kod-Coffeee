@@ -58,15 +58,20 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   return (
     <>
       {/* Mobile Top Header for Admin */}
-      <div className="lg:hidden bg-espresso-950 text-white px-4 py-3 border-b border-espresso-800 flex items-center justify-between sticky top-[41px] z-30 shadow-md">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-crema text-espresso-950 flex items-center justify-center font-bold">
+      <div className="lg:hidden bg-espresso-950 text-white px-4 py-3 border-b border-espresso-800 flex items-center justify-between sticky top-0 z-30 shadow-md">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl bg-amber-400 text-espresso-950 flex items-center justify-center font-black shadow-xs">
             <Coffee className="w-4 h-4" />
           </div>
           <div>
-            <span className="font-extrabold text-sm font-display tracking-tight">
-              KOD<span className="text-crema">ADMIN</span>
-            </span>
+            <div className="flex items-center gap-1">
+              <span className="font-black text-sm font-display tracking-tight text-white">
+                KOD<span className="text-amber-400">ADMIN</span>
+              </span>
+              <span className="text-[9px] font-extrabold px-1.5 py-0.2 rounded bg-amber-400 text-espresso-950 uppercase">
+                Staff
+              </span>
+            </div>
             <span className="text-[10px] text-espresso-400 block -mt-0.5 font-medium">
               {NAV_ITEMS.find((n) => n.id === currentTab)?.label}
             </span>
@@ -76,24 +81,25 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
         <div className="flex items-center gap-2">
           <button
             onClick={onReturnToCustomer}
-            className="text-[11px] bg-espresso-900 hover:bg-espresso-800 text-crema px-2.5 py-1 rounded-lg border border-espresso-700 font-semibold flex items-center gap-1"
+            className="text-[11px] bg-espresso-900 hover:bg-espresso-800 text-amber-300 px-3 py-1.5 rounded-xl border border-espresso-700 font-bold flex items-center gap-1.5 active:scale-95 transition-all"
           >
-            <ArrowLeft className="w-3 h-3" />
+            <ArrowLeft className="w-3.5 h-3.5" />
             <span>Customer</span>
           </button>
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl bg-espresso-800 text-white hover:bg-espresso-700"
+            className="p-2 rounded-xl bg-espresso-900 text-white hover:bg-espresso-800 border border-espresso-800 active:scale-95"
+            aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {mobileMenuOpen ? <X className="w-5 h-5 text-amber-400" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 top-[89px] z-40 bg-espresso-950/95 backdrop-blur-md p-4 flex flex-col justify-between animate-fade-in">
+        <div className="lg:hidden fixed inset-0 top-[57px] z-40 bg-espresso-950/98 backdrop-blur-md p-4 flex flex-col justify-between animate-fade-in">
           <nav className="space-y-1.5">
             {NAV_ITEMS.map((item) => {
               const isActive = currentTab === item.id;
@@ -103,7 +109,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
                   onClick={() => handleSelect(item.id)}
                   className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl text-xs font-bold transition-all ${
                     isActive
-                      ? 'bg-white text-espresso-950 shadow-sm font-extrabold'
+                      ? 'bg-amber-400 text-espresso-950 shadow-md font-black'
                       : 'text-espresso-300 hover:bg-espresso-900 hover:text-white'
                   }`}
                 >
@@ -113,10 +119,10 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
                   </div>
                   {item.badge !== undefined && (
                     <span
-                      className={`text-xs font-extrabold px-2 py-0.5 rounded-full ${
+                      className={`text-xs font-black px-2 py-0.5 rounded-full ${
                         isActive
-                          ? 'bg-espresso-950 text-white'
-                          : 'bg-white text-espresso-950'
+                          ? 'bg-espresso-950 text-amber-300 shadow-2xs'
+                          : 'bg-amber-400 text-espresso-950'
                       }`}
                     >
                       {item.badge}
@@ -133,17 +139,17 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
                 setMobileMenuOpen(false);
                 onReturnToCustomer();
               }}
-              className="w-full py-3 rounded-2xl bg-espresso-900 text-white font-bold text-xs flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-2xl bg-espresso-900 hover:bg-espresso-800 text-white font-bold text-xs flex items-center justify-center gap-2 border border-espresso-800"
             >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Lihat Tampilan Smartphone Customer</span>
+              <ArrowLeft className="w-4 h-4 text-amber-400" />
+              <span>Buka Menu Pelanggan</span>
             </button>
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 onLogout();
               }}
-              className="w-full py-2.5 rounded-2xl bg-ember-dark/20 text-ember-light font-semibold text-xs flex items-center justify-center gap-2"
+              className="w-full py-2.5 rounded-2xl bg-ember/20 hover:bg-ember/30 text-ember font-bold text-xs flex items-center justify-center gap-2 border border-ember/30 transition-colors"
             >
               <LogOut className="w-4 h-4" />
               <span>Keluar (Logout Staff)</span>
@@ -153,17 +159,17 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
       )}
 
       {/* Desktop Sidebar (hidden on mobile, visible on lg) */}
-      <aside className="hidden lg:flex w-64 bg-espresso-950 text-white flex-col justify-between border-r border-espresso-800 shrink-0 sticky top-[41px] h-[calc(100vh-41px)]">
+      <aside className="hidden lg:flex w-64 bg-espresso-950 text-white flex-col justify-between border-r border-espresso-800 shrink-0 sticky top-0 h-screen">
         <div>
           {/* Brand */}
           <div className="p-5 border-b border-espresso-800 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-white text-espresso-950 flex items-center justify-center font-bold shadow-xs">
+              <div className="w-9 h-9 rounded-2xl bg-amber-400 text-espresso-950 flex items-center justify-center font-black shadow-xs">
                 <Coffee className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="font-extrabold text-base tracking-tight font-display">
-                  KOD<span className="text-espresso-400">ADMIN</span>
+                <h2 className="font-black text-base tracking-tight font-display text-white">
+                  KOD<span className="text-amber-400">ADMIN</span>
                 </h2>
                 <p className="text-[10px] text-espresso-400 font-medium">Operations & Barista Portal</p>
               </div>
@@ -171,17 +177,17 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
           </div>
 
           {/* Navigation Items */}
-          <nav className="p-3 space-y-1">
+          <nav className="p-3 space-y-1.5">
             {NAV_ITEMS.map((item) => {
               const isActive = currentTab === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => onSelectTab(item.id)}
-                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold transition-all ${
+                  className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl text-xs transition-all ${
                     isActive
-                      ? 'bg-white text-espresso-950 shadow-xs font-bold'
-                      : 'text-espresso-300 hover:bg-espresso-900 hover:text-white'
+                      ? 'bg-amber-400 text-espresso-950 shadow-md font-black'
+                      : 'text-espresso-300 hover:bg-espresso-900 hover:text-white font-semibold'
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -190,10 +196,10 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
                   </div>
                   {item.badge !== undefined && (
                     <span
-                      className={`text-[10px] font-extrabold px-1.5 py-0.2 rounded-full ${
+                      className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
                         isActive
-                          ? 'bg-espresso-950 text-white'
-                          : 'bg-white text-espresso-950'
+                          ? 'bg-espresso-950 text-amber-300 shadow-2xs'
+                          : 'bg-amber-400 text-espresso-950 font-black'
                       }`}
                     >
                       {item.badge}
@@ -206,18 +212,18 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
         </div>
 
         {/* Bottom Actions */}
-        <div className="p-3 border-t border-espresso-800 space-y-1.5">
+        <div className="p-4 border-t border-espresso-800 space-y-2">
           <button
             onClick={onReturnToCustomer}
-            className="w-full flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium text-crema hover:bg-espresso-900 transition-colors"
+            className="w-full flex items-center gap-2 px-3.5 py-2.5 rounded-2xl text-xs font-bold text-amber-300 hover:bg-espresso-900 border border-espresso-800/80 transition-all active:scale-95"
           >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Lihat Tampilan Customer</span>
+            <ArrowLeft className="w-4 h-4 text-amber-400" />
+            <span>Buka Menu Pelanggan</span>
           </button>
 
           <button
             onClick={onLogout}
-            className="w-full flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium text-espresso-400 hover:text-ember-light hover:bg-espresso-900 transition-colors"
+            className="w-full flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs font-semibold text-espresso-400 hover:text-ember hover:bg-espresso-900 transition-colors"
           >
             <LogOut className="w-4 h-4" />
             <span>Logout Staff</span>

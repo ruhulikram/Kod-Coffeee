@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Coffee, Lock, Mail, ArrowRight, ShieldCheck, X } from 'lucide-react';
+import { Coffee, Lock, Mail, ShieldCheck, X } from 'lucide-react';
 
 interface AdminLoginModalProps {
   isOpen: boolean;
@@ -36,79 +36,82 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-espresso-950/80 backdrop-blur-md animate-fade-in">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-espresso-950/80 backdrop-blur-md animate-fade-in"
+      onClick={onClose}
+    >
       <div
-        className="w-full max-w-md bg-white rounded-3xl shadow-floating overflow-hidden border border-espresso-100 animate-slide-up"
+        className="w-full max-w-md bg-white rounded-3xl shadow-floating overflow-hidden border border-espresso-200 animate-slide-up"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="bg-espresso-950 text-white p-6 relative">
+        <div className="bg-espresso-950 text-white p-6 relative border-b border-espresso-800">
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-espresso-800 text-espresso-300 hover:text-white flex items-center justify-center transition-colors"
+            className="absolute top-5 right-5 w-8 h-8 rounded-xl bg-espresso-900 hover:bg-espresso-800 text-espresso-300 hover:text-white flex items-center justify-center transition-colors shadow-2xs"
           >
             <X className="w-4 h-4" />
           </button>
 
-          <div className="w-12 h-12 rounded-2xl bg-crema text-espresso-950 flex items-center justify-center font-bold mb-3 shadow-md">
+          <div className="w-12 h-12 rounded-2xl bg-amber-400 text-espresso-950 flex items-center justify-center font-black mb-3 shadow-md">
             <Coffee className="w-6 h-6" />
           </div>
-          <h2 className="text-xl font-extrabold font-display">Portal Staff & Admin</h2>
-          <p className="text-xs text-espresso-400 mt-0.5">
-            Masuk untuk memantau kitchen order, kelola menu, dan laporan.
+          <h2 className="text-xl font-black font-display text-white">Portal Staff & Barista</h2>
+          <p className="text-xs text-espresso-300 mt-1">
+            Masuk untuk memantau kitchen orders, kelola menu, dan analitik penjualan.
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {errorMsg && (
-            <div className="p-3 rounded-xl bg-ember-light border border-ember/20 text-ember-dark text-xs">
+            <div className="p-3.5 rounded-2xl bg-ember-light border border-ember/20 text-ember text-xs font-bold">
               {errorMsg}
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-bold text-espresso-700 uppercase tracking-wider mb-1">
+            <label className="block text-[11px] font-black text-espresso-800 uppercase tracking-wider mb-1.5">
               Email Staff
             </label>
             <div className="relative">
-              <Mail className="w-4 h-4 text-espresso-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Mail className="w-4 h-4 text-espresso-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border border-espresso-200 focus:outline-none focus:border-crema bg-oat-50"
+                className="w-full pl-10 pr-4 py-2.5 text-xs rounded-2xl border border-espresso-200 focus:outline-none focus:border-amber-400 bg-oat-50/70 text-espresso-950 font-medium"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-espresso-700 uppercase tracking-wider mb-1">
+            <label className="block text-[11px] font-black text-espresso-800 uppercase tracking-wider mb-1.5">
               Kata Sandi
             </label>
             <div className="relative">
-              <Lock className="w-4 h-4 text-espresso-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Lock className="w-4 h-4 text-espresso-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full pl-10 pr-4 py-2.5 text-xs rounded-xl border border-espresso-200 focus:outline-none focus:border-crema bg-oat-50"
+                className="w-full pl-10 pr-4 py-2.5 text-xs rounded-2xl border border-espresso-200 focus:outline-none focus:border-amber-400 bg-oat-50/70 text-espresso-950 font-medium"
               />
             </div>
           </div>
 
-          <div className="bg-oat-100 p-3 rounded-xl border border-espresso-100 text-[11px] text-espresso-600">
-            <span className="font-bold text-espresso-900 block mb-0.5">Kredensial Demo:</span>
-            Email: <code className="font-mono font-bold text-crema-800">admin@kodcoffee.com</code> / Sandi: <code className="font-mono font-bold text-crema-800">admin123</code>
+          <div className="bg-amber-50/80 p-3.5 rounded-2xl border border-amber-200/80 text-[11px] text-amber-950">
+            <span className="font-bold text-amber-900 block mb-0.5">Kredensial Demo:</span>
+            Email: <code className="font-mono font-bold text-amber-900 bg-white px-1.5 py-0.5 rounded border border-amber-200">admin@kodcoffee.com</code> / Sandi: <code className="font-mono font-bold text-amber-900 bg-white px-1.5 py-0.5 rounded border border-amber-200">admin123</code>
           </div>
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3.5 px-4 rounded-2xl bg-espresso-950 hover:bg-espresso-900 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-sm transition-all active:scale-95"
+            className="w-full py-3.5 px-4 rounded-2xl bg-amber-400 hover:bg-amber-300 text-espresso-950 font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-95 border border-amber-300"
           >
-            <ShieldCheck className="w-4 h-4 text-crema" />
-            <span>{isLoading ? 'Memverifikasi...' : 'Masuk Dashboard'}</span>
+            <ShieldCheck className="w-4 h-4 text-espresso-950" />
+            <span>{isLoading ? 'Memverifikasi...' : 'Masuk Dashboard Admin'}</span>
           </button>
         </form>
       </div>

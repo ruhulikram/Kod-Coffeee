@@ -184,19 +184,19 @@ export const PosView: React.FC = () => {
   };
 
   return (
-    <div className="p-4 sm:p-6 max-w-7xl mx-auto space-y-4">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-5 animate-fade-in">
       {/* Top POS Header */}
-      <div className="bg-white rounded-3xl p-4 sm:p-5 border border-espresso-100 shadow-subtle flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="bg-white rounded-3xl p-5 sm:p-6 border border-espresso-200 shadow-subtle flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-espresso-950 text-crema flex items-center justify-center font-extrabold shadow-sm">
-            <ShoppingBag className="w-5 h-5" />
+          <div className="w-11 h-11 rounded-2xl bg-amber-400 text-espresso-950 flex items-center justify-center font-black shadow-xs">
+            <ShoppingBag className="w-6 h-6" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl font-extrabold text-espresso-950 font-display">
+              <h1 className="text-xl font-black text-espresso-950 font-display">
                 Kasir POS (Point of Sale)
               </h1>
-              <span className="bg-brew-light text-brew text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-brew/20">
+              <span className="bg-brew-light text-brew text-[10px] font-black px-2.5 py-0.5 rounded-full border border-brew/20">
                 LIVE TERMINAL
               </span>
             </div>
@@ -208,14 +208,14 @@ export const PosView: React.FC = () => {
 
         {/* Quick Shift Bar */}
         <div className="flex items-center gap-2 self-start md:self-auto">
-          <div className="px-3 py-1.5 rounded-xl bg-oat-50 border border-espresso-100 text-xs font-semibold text-espresso-700 flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-brew animate-pulse" />
+          <div className="px-3.5 py-2 rounded-2xl bg-oat-50 border border-espresso-200 text-xs font-bold text-espresso-700 flex items-center gap-2 shadow-2xs">
+            <span className="w-2.5 h-2.5 rounded-full bg-brew animate-pulse" />
             <span>Kasir Utama (Shift 1)</span>
           </div>
           {posCart.length > 0 && (
             <button
               onClick={clearAll}
-              className="px-3 py-1.5 rounded-xl border border-ember/30 text-ember-dark hover:bg-ember-light/20 text-xs font-bold transition-all flex items-center gap-1"
+              className="px-3.5 py-2 rounded-2xl border border-ember/30 text-ember hover:bg-ember-light text-xs font-bold transition-all flex items-center gap-1.5 active:scale-95"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reset Tiket</span>
@@ -224,26 +224,26 @@ export const PosView: React.FC = () => {
         </div>
       </div>
 
-      {/* Main 2-Column POS Layout (Optimized for iPad Horizontal & Desktop) */}
+      {/* Main 2-Column POS Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
-        {/* Left Column: Menu Catalog & Categories (7 cols on lg / iPad landscape) */}
+        {/* Left Column: Menu Catalog & Categories */}
         <div className="lg:col-span-7 space-y-4">
           {/* Search & Category Pills */}
-          <div className="bg-white rounded-3xl p-4 sm:p-5 border border-espresso-100 shadow-subtle space-y-3">
+          <div className="bg-white rounded-3xl p-4 sm:p-5 border border-espresso-200 shadow-subtle space-y-3">
             {/* Search Input */}
             <div className="relative">
-              <Search className="w-4 h-4 text-espresso-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-espresso-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 placeholder="Cari nama kopi, makanan, atau rasa (misal: caramel, oat)..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-10 py-2.5 bg-oat-50 rounded-2xl border border-espresso-100 text-xs md:text-sm text-espresso-950 font-medium placeholder-espresso-400 focus:outline-none focus:ring-2 focus:ring-crema focus:border-crema transition-all"
+                className="w-full pl-10 pr-10 py-2.5 bg-oat-50/70 rounded-2xl border border-espresso-200 text-xs md:text-sm text-espresso-950 font-medium placeholder-espresso-400 focus:outline-none focus:border-amber-400 transition-all"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-espresso-400 hover:text-espresso-700"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-espresso-400 hover:text-espresso-700"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -251,13 +251,13 @@ export const PosView: React.FC = () => {
             </div>
 
             {/* Category Pills */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+            <div className="flex items-center gap-2 overflow-x-auto pb-1">
               <button
                 onClick={() => setSelectedCategoryId(null)}
-                className={`px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold shrink-0 transition-all ${
+                className={`px-3.5 py-2 rounded-2xl text-xs md:text-sm font-bold shrink-0 transition-all ${
                   selectedCategoryId === null
-                    ? 'bg-espresso-950 text-crema shadow-sm'
-                    : 'bg-oat-100 text-espresso-700 hover:bg-oat-200'
+                    ? 'bg-espresso-950 text-amber-300 shadow-sm font-black'
+                    : 'bg-oat-100/80 text-espresso-700 hover:bg-espresso-100 border border-espresso-100'
                 }`}
               >
                 Semua ({menus.filter((m) => m.is_available).length})
@@ -269,16 +269,16 @@ export const PosView: React.FC = () => {
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategoryId(cat.id)}
-                    className={`px-3.5 py-2 rounded-xl text-xs md:text-sm font-bold shrink-0 transition-all flex items-center gap-1.5 ${
+                    className={`px-3.5 py-2 rounded-2xl text-xs md:text-sm font-bold shrink-0 transition-all flex items-center gap-1.5 ${
                       isSelected
-                        ? 'bg-espresso-950 text-crema shadow-sm'
-                        : 'bg-oat-100 text-espresso-700 hover:bg-oat-200'
+                        ? 'bg-espresso-950 text-amber-300 shadow-sm font-black'
+                        : 'bg-oat-100/80 text-espresso-700 hover:bg-espresso-100 border border-espresso-100'
                     }`}
                   >
                     <span>{cat.name}</span>
                     <span
                       className={`text-[10px] md:text-xs px-1.5 py-0.2 rounded-full ${
-                        isSelected ? 'bg-espresso-800 text-white font-extrabold' : 'bg-white text-espresso-600'
+                        isSelected ? 'bg-amber-400 text-espresso-950 font-black' : 'bg-white text-espresso-600'
                       }`}
                     >
                       {count}
@@ -289,18 +289,18 @@ export const PosView: React.FC = () => {
             </div>
           </div>
 
-          {/* Menu Items Grid - 2 col on phone, 3 col on iPad, 3/4 col on desktop */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-3 gap-3.5">
+          {/* Menu Items Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
             {filteredMenus.map((menu) => {
               const inCart = posCart.find((item) => item.menu.id === menu.id);
               return (
                 <div
                   key={menu.id}
                   onClick={() => addToCart(menu)}
-                  className={`group relative bg-white rounded-3xl p-3.5 border transition-all cursor-pointer select-none hover:shadow-md active:scale-98 flex flex-col justify-between ${
+                  className={`group relative bg-white rounded-3xl p-3.5 border transition-all cursor-pointer select-none hover:shadow-elevated active:scale-98 flex flex-col justify-between ${
                     inCart
-                      ? 'border-espresso-950 ring-2 ring-espresso-950/20 bg-espresso-50/40'
-                      : 'border-espresso-100 hover:border-espresso-300'
+                      ? 'border-amber-400 ring-2 ring-amber-400/30 bg-amber-50/20'
+                      : 'border-espresso-200 hover:border-amber-300'
                   }`}
                 >
                   <div>
@@ -318,13 +318,13 @@ export const PosView: React.FC = () => {
                         </span>
                       )}
                       {inCart && (
-                        <span className="absolute top-2 right-2 bg-espresso-950 text-white text-xs font-black w-7 h-7 rounded-full flex items-center justify-center shadow-lg animate-fade-in">
+                        <span className="absolute top-2 right-2 bg-espresso-950 text-amber-300 text-xs font-black w-7 h-7 rounded-full flex items-center justify-center shadow-lg animate-fade-in">
                           {inCart.quantity}
                         </span>
                       )}
                     </div>
 
-                    <h3 className="font-bold text-xs md:text-sm text-espresso-950 line-clamp-1 font-display">
+                    <h3 className="font-black text-xs md:text-sm text-espresso-950 line-clamp-1 font-display">
                       {menu.name}
                     </h3>
                     <p className="text-[10px] md:text-xs text-espresso-400 line-clamp-1 mt-0.5">
@@ -332,15 +332,15 @@ export const PosView: React.FC = () => {
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-espresso-50">
-                    <span className="text-xs md:text-sm font-black text-espresso-900 font-display">
+                  <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-espresso-100">
+                    <span className="text-xs md:text-sm font-black text-espresso-950 font-display">
                       {formatRupiah(menu.price)}
                     </span>
                     <button
                       type="button"
-                      className="w-7 h-7 md:w-8 md:h-8 rounded-xl bg-espresso-900 group-hover:bg-espresso-950 text-white flex items-center justify-center shadow-sm active:scale-95 transition-transform"
+                      className="w-7 h-7 md:w-8 md:h-8 rounded-xl bg-amber-400 group-hover:bg-amber-300 text-espresso-950 flex items-center justify-center shadow-xs active:scale-95 transition-transform font-bold"
                     >
-                      <Plus className="w-4 h-4" />
+                      <Plus className="w-4 h-4 stroke-[3]" />
                     </button>
                   </div>
                 </div>
@@ -349,7 +349,7 @@ export const PosView: React.FC = () => {
           </div>
 
           {filteredMenus.length === 0 && (
-            <div className="bg-white rounded-3xl p-8 text-center border border-espresso-100">
+            <div className="bg-white rounded-3xl p-8 text-center border border-espresso-200 shadow-subtle">
               <Coffee className="w-8 h-8 text-espresso-300 mx-auto mb-2" />
               <p className="text-xs font-bold text-espresso-700">Tidak ada menu yang sesuai</p>
               <p className="text-[11px] text-espresso-400 mt-0.5">
@@ -359,27 +359,27 @@ export const PosView: React.FC = () => {
           )}
         </div>
 
-        {/* Right Column: POS Active Ticket / Slip (5 cols on lg / iPad - fixed viewport height) */}
-        <div className="lg:col-span-5 bg-white rounded-3xl p-4 sm:p-5 border border-espresso-100 shadow-subtle flex flex-col justify-between lg:sticky lg:top-14 h-auto lg:h-[calc(100vh-90px)]">
+        {/* Right Column: POS Active Ticket / Slip */}
+        <div className="lg:col-span-5 bg-white rounded-3xl p-5 sm:p-6 border border-espresso-200 shadow-subtle flex flex-col justify-between lg:sticky lg:top-4 h-auto lg:h-[calc(100vh-80px)]">
           {/* Top Form Header */}
           <div className="space-y-3 pb-3 border-b border-espresso-100">
             <div className="flex items-center justify-between">
-              <span className="text-xs md:text-sm font-extrabold text-espresso-900 font-display uppercase tracking-wider flex items-center gap-1.5">
-                <Receipt className="w-4 h-4 text-crema-600" />
+              <span className="text-xs md:text-sm font-black text-espresso-950 font-display uppercase tracking-wider flex items-center gap-2">
+                <Receipt className="w-4 h-4 text-amber-500" />
                 <span>Tiket Pesanan Kasir</span>
               </span>
-              <span className="text-xs font-bold text-espresso-600 bg-oat-100 px-2.5 py-1 rounded-xl">
+              <span className="text-xs font-bold text-espresso-700 bg-oat-100 px-3 py-1 rounded-xl border border-espresso-100">
                 {totalItemsCount} Item
               </span>
             </div>
 
             {/* Order Type Toggle (Dine In vs Takeaway) */}
-            <div className="grid grid-cols-2 gap-1.5 bg-oat-100 p-1.5 rounded-2xl">
+            <div className="grid grid-cols-2 gap-1.5 bg-oat-100 p-1.5 rounded-2xl border border-espresso-100">
               <button
                 onClick={() => setOrderType('dine_in')}
-                className={`py-2 px-3 rounded-xl text-xs md:text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                className={`py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                   orderType === 'dine_in'
-                    ? 'bg-espresso-950 text-crema shadow-sm'
+                    ? 'bg-espresso-950 text-amber-300 shadow-sm font-black'
                     : 'text-espresso-600 hover:text-espresso-900'
                 }`}
               >
@@ -388,9 +388,9 @@ export const PosView: React.FC = () => {
               </button>
               <button
                 onClick={() => setOrderType('takeaway')}
-                className={`py-2 px-3 rounded-xl text-xs md:text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                className={`py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
                   orderType === 'takeaway'
-                    ? 'bg-espresso-950 text-crema shadow-sm'
+                    ? 'bg-espresso-950 text-amber-300 shadow-sm font-black'
                     : 'text-espresso-600 hover:text-espresso-900'
                 }`}
               >
@@ -399,17 +399,17 @@ export const PosView: React.FC = () => {
               </button>
             </div>
 
-            {/* If Dine In: iPad Touch-Friendly Table Dropdown */}
+            {/* If Dine In: Touch-Friendly Table Dropdown */}
             {orderType === 'dine_in' ? (
               <div>
-                <label className="block text-[11px] font-bold text-espresso-700 mb-1">
-                  Pilih Meja Customer:
+                <label className="block text-[11px] font-black text-espresso-600 mb-1 uppercase tracking-wider">
+                  Pilih Meja Pelanggan:
                 </label>
                 <div className="relative">
                   <select
                     value={selectedTableId}
                     onChange={(e) => setSelectedTableId(e.target.value)}
-                    className="w-full appearance-none pl-3.5 pr-9 py-2.5 bg-oat-50 border border-espresso-200 rounded-2xl text-xs md:text-sm font-bold text-espresso-900 focus:outline-none focus:ring-2 focus:ring-crema cursor-pointer"
+                    className="w-full appearance-none pl-3.5 pr-9 py-2.5 bg-oat-50/80 border border-espresso-200 rounded-2xl text-xs md:text-sm font-bold text-espresso-900 focus:outline-none focus:border-amber-400 cursor-pointer"
                   >
                     {tables.map((t) => (
                       <option key={t.id} value={t.id}>
@@ -417,7 +417,7 @@ export const PosView: React.FC = () => {
                       </option>
                     ))}
                   </select>
-                  <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-espresso-500">
+                  <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-espresso-400">
                     <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20">
                       <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                     </svg>
@@ -425,32 +425,32 @@ export const PosView: React.FC = () => {
                 </div>
               </div>
             ) : (
-              <div className="p-2.5 rounded-2xl bg-crema-50/60 border border-crema-200 text-xs text-espresso-700 flex items-center gap-2">
-                <ShoppingBag className="w-4 h-4 text-crema-600 shrink-0" />
+              <div className="p-3 rounded-2xl bg-amber-50 border border-amber-200/80 text-xs text-amber-950 flex items-center gap-2">
+                <ShoppingBag className="w-4 h-4 text-amber-600 shrink-0" />
                 <span>Pesanan akan dikemas takeaway / cup to-go untuk dibawa pulang.</span>
               </div>
             )}
 
             {/* Customer Name Input */}
             <div className="relative">
-              <User className="w-3.5 h-3.5 text-espresso-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <User className="w-3.5 h-3.5 text-espresso-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
               <input
                 type="text"
                 placeholder="Nama Pelanggan (opsional)..."
                 value={customerName}
                 onChange={(e) => setCustomerName(e.target.value)}
-                className="w-full pl-8 pr-3 py-2 bg-oat-50 border border-espresso-100 rounded-xl text-xs md:text-sm text-espresso-900 font-medium placeholder-espresso-400 focus:outline-none focus:ring-1 focus:ring-crema"
+                className="w-full pl-9 pr-3.5 py-2.5 bg-oat-50/80 border border-espresso-200 rounded-2xl text-xs text-espresso-900 font-medium placeholder-espresso-400 focus:outline-none focus:border-amber-400"
               />
             </div>
           </div>
 
           {/* Cart Item List (Scrollable Area) */}
-          <div className="flex-1 overflow-y-auto my-2 space-y-2 pr-1 divide-y divide-espresso-50 min-h-[140px] max-h-[280px] lg:max-h-none">
+          <div className="flex-1 overflow-y-auto my-2 space-y-2.5 pr-1 divide-y divide-espresso-100 min-h-[140px] max-h-[280px] lg:max-h-none">
             {posCart.map((item) => (
               <div key={item.menu.id} className="pt-2.5 first:pt-0 space-y-1.5">
                 <div className="flex items-center justify-between gap-2">
                   <div className="min-w-0 flex-1">
-                    <h4 className="font-bold text-xs md:text-sm text-espresso-950 truncate">
+                    <h4 className="font-bold text-xs md:text-sm text-espresso-950 truncate font-display">
                       {item.menu.name}
                     </h4>
                     <span className="text-[11px] md:text-xs text-espresso-500 font-display font-semibold">
@@ -458,36 +458,37 @@ export const PosView: React.FC = () => {
                     </span>
                   </div>
 
-                  {/* iPad Touch-Friendly Stepper Buttons */}
-                  <div className="flex items-center gap-1 bg-oat-100 rounded-xl p-1 border border-espresso-100">
+                  {/* Stepper Buttons */}
+                  <div className="flex items-center gap-1 bg-espresso-950 text-white rounded-xl p-0.5 shadow-2xs">
                     <button
                       onClick={() => updateQuantity(item.menu.id, -1)}
-                      className="w-7 h-7 rounded-lg bg-white text-espresso-800 hover:bg-espresso-900 hover:text-white flex items-center justify-center shadow-xs transition-colors active:scale-95"
+                      className="w-6 h-6 rounded-lg bg-espresso-900 hover:bg-espresso-800 text-espresso-200 hover:text-white flex items-center justify-center active:scale-90 transition-transform"
                     >
-                      <Minus className="w-3.5 h-3.5" />
+                      <Minus className="w-3 h-3 stroke-[2.5]" />
                     </button>
-                    <span className="w-7 text-center text-xs md:text-sm font-black text-espresso-950">
+                    <span className="w-6 text-center text-xs font-black text-amber-300">
                       {item.quantity}
                     </span>
                     <button
                       onClick={() => updateQuantity(item.menu.id, 1)}
-                      className="w-7 h-7 rounded-lg bg-white text-espresso-800 hover:bg-espresso-900 hover:text-white flex items-center justify-center shadow-xs transition-colors active:scale-95"
+                      className="w-6 h-6 rounded-lg bg-amber-400 hover:bg-amber-300 text-espresso-950 flex items-center justify-center active:scale-90 transition-transform shadow-xs"
                     >
-                      <Plus className="w-3.5 h-3.5" />
+                      <Plus className="w-3 h-3 stroke-[3]" />
                     </button>
                   </div>
 
                   {/* Item Subtotal */}
-                  <span className="font-black text-xs md:text-sm text-espresso-900 font-display w-20 text-right">
+                  <span className="font-black text-xs md:text-sm text-espresso-950 font-display w-20 text-right">
                     {formatRupiah(item.menu.price * item.quantity)}
                   </span>
 
                   {/* Remove */}
                   <button
                     onClick={() => removeItem(item.menu.id)}
-                    className="text-espresso-300 hover:text-ember-dark p-1.5 transition-colors"
+                    className="text-espresso-300 hover:text-ember p-1 transition-colors"
+                    title="Hapus"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
@@ -499,7 +500,7 @@ export const PosView: React.FC = () => {
                     placeholder="Catatan (misal: Less ice, gula aren 50%)..."
                     value={item.notes}
                     onChange={(e) => updateItemNotes(item.menu.id, e.target.value)}
-                    className="w-full text-[11px] bg-oat-50/70 border border-espresso-100 rounded-lg px-2.5 py-1 text-espresso-700 placeholder-espresso-400 focus:outline-none focus:ring-1 focus:ring-crema"
+                    className="w-full text-[11px] bg-oat-50/70 border border-espresso-200 rounded-xl px-2.5 py-1 text-espresso-800 placeholder-espresso-400 focus:outline-none focus:border-amber-400"
                   />
                 </div>
               </div>
@@ -515,12 +516,12 @@ export const PosView: React.FC = () => {
           </div>
 
           {/* Bottom Billing & Action Footer */}
-          <div className="space-y-3 pt-2 border-t border-dashed border-espresso-200">
+          <div className="space-y-3 pt-3 border-t border-dashed border-espresso-200">
             {/* Pricing Breakdown */}
             <div className="space-y-1 text-xs text-espresso-600">
               <div className="flex justify-between">
                 <span>Subtotal Item</span>
-                <span className="font-bold text-espresso-900 font-display">{formatRupiah(subtotal)}</span>
+                <span className="font-semibold text-espresso-900">{formatRupiah(subtotal)}</span>
               </div>
               <div className="flex justify-between text-[11px]">
                 <span>Pajak Resto PB1 (10%)</span>
@@ -530,38 +531,38 @@ export const PosView: React.FC = () => {
                 <span>Biaya Layanan Service (5%)</span>
                 <span className="font-medium">{formatRupiah(service)}</span>
               </div>
-              <div className="flex justify-between items-center text-sm md:text-base font-extrabold text-espresso-950 pt-1.5 border-t border-espresso-100">
-                <span className="font-display">Total Tagihan</span>
-                <span className="text-lg md:text-xl font-black text-espresso-950 font-display text-crema-800">
+              <div className="flex justify-between items-center text-sm font-black text-espresso-950 pt-2 border-t border-espresso-100">
+                <span>Total Tagihan</span>
+                <span className="text-lg font-black text-amber-600 font-display">
                   {formatRupiah(grandTotal)}
                 </span>
               </div>
             </div>
 
-            {/* iPad Touch-Friendly Payment Buttons */}
+            {/* Touch-Friendly Payment Buttons */}
             <div className="grid grid-cols-3 gap-2 pt-1">
               <button
                 disabled={posCart.length === 0}
                 onClick={() => handleOpenPayment('cash')}
-                className="py-3.5 md:py-4 rounded-2xl bg-espresso-950 hover:bg-espresso-900 disabled:opacity-40 text-white font-extrabold text-xs md:text-xs flex flex-col items-center justify-center gap-1 shadow-md transition-all active:scale-95"
+                className="py-3.5 rounded-2xl bg-espresso-950 hover:bg-espresso-900 disabled:opacity-40 text-white font-black text-xs flex flex-col items-center justify-center gap-1 shadow-md transition-all active:scale-95"
               >
-                <DollarSign className="w-4 h-4 text-crema" />
+                <DollarSign className="w-4 h-4 text-amber-400" />
                 <span>Tunai (Cash)</span>
               </button>
 
               <button
                 disabled={posCart.length === 0}
                 onClick={() => handleOpenPayment('qris')}
-                className="py-3.5 md:py-4 rounded-2xl bg-crema-100 hover:bg-crema-200 disabled:opacity-40 text-crema-900 font-extrabold text-xs md:text-xs flex flex-col items-center justify-center gap-1 border border-crema-300 shadow-sm transition-all active:scale-95"
+                className="py-3.5 rounded-2xl bg-amber-400 hover:bg-amber-300 disabled:opacity-40 text-espresso-950 font-black text-xs flex flex-col items-center justify-center gap-1 border border-amber-300 shadow-sm transition-all active:scale-95"
               >
-                <QrCode className="w-4 h-4 text-crema-800" />
+                <QrCode className="w-4 h-4 text-espresso-950" />
                 <span>QRIS Instant</span>
               </button>
 
               <button
                 disabled={posCart.length === 0}
                 onClick={() => handleOpenPayment('debit')}
-                className="py-3.5 md:py-4 rounded-2xl bg-indigo-50 hover:bg-indigo-100 disabled:opacity-40 text-indigo-900 font-extrabold text-xs md:text-xs flex flex-col items-center justify-center gap-1 border border-indigo-200 shadow-sm transition-all active:scale-95"
+                className="py-3.5 rounded-2xl bg-indigo-50 hover:bg-indigo-100 disabled:opacity-40 text-indigo-900 font-black text-xs flex flex-col items-center justify-center gap-1 border border-indigo-200 shadow-sm transition-all active:scale-95"
               >
                 <CreditCard className="w-4 h-4 text-indigo-700" />
                 <span>Debit / EDC</span>
@@ -576,11 +577,11 @@ export const PosView: React.FC = () => {
       {/* ========================================================================= */}
       {isPaymentModalOpen && (
         <div className="fixed inset-0 z-50 bg-espresso-950/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 border border-espresso-100 shadow-floating space-y-5">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 border border-espresso-200 shadow-floating space-y-5 animate-slide-up">
             {/* Modal Header */}
             <div className="flex items-center justify-between pb-3 border-b border-espresso-100">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-espresso-950 text-crema flex items-center justify-center font-bold">
+                <div className="w-10 h-10 rounded-2xl bg-amber-400 text-espresso-950 flex items-center justify-center font-black">
                   {selectedPaymentMethod === 'cash' ? (
                     <DollarSign className="w-5 h-5" />
                   ) : selectedPaymentMethod === 'qris' ? (
@@ -590,7 +591,7 @@ export const PosView: React.FC = () => {
                   )}
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-base text-espresso-950 font-display">
+                  <h3 className="font-black text-base text-espresso-950 font-display">
                     {selectedPaymentMethod === 'cash'
                       ? 'Pembayaran Tunai (Cash)'
                       : selectedPaymentMethod === 'qris'
@@ -606,27 +607,27 @@ export const PosView: React.FC = () => {
               </div>
               <button
                 onClick={() => setIsPaymentModalOpen(false)}
-                className="p-1 rounded-xl text-espresso-400 hover:text-espresso-900"
+                className="w-8 h-8 rounded-xl bg-espresso-100 hover:bg-espresso-200 text-espresso-700 flex items-center justify-center transition-colors"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Total Tagihan Box */}
-            <div className="bg-oat-50 p-4 rounded-2xl border border-espresso-100 flex items-center justify-between">
+            <div className="bg-oat-50 p-4 rounded-2xl border border-espresso-200 flex items-center justify-between">
               <span className="text-xs font-bold text-espresso-600">Total Yang Harus Dibayar:</span>
-              <span className="text-xl font-black text-espresso-950 font-display">
+              <span className="text-xl font-black text-amber-600 font-display">
                 {formatRupiah(grandTotal)}
               </span>
             </div>
 
             {/* Tab Method Switcher in Modal */}
-            <div className="grid grid-cols-3 gap-1.5 bg-oat-100 p-1 rounded-xl">
+            <div className="grid grid-cols-3 gap-1.5 bg-oat-100 p-1.5 rounded-2xl border border-espresso-100">
               <button
                 onClick={() => setSelectedPaymentMethod('cash')}
-                className={`py-1.5 text-xs font-bold rounded-lg transition-all ${
+                className={`py-2 text-xs font-bold rounded-xl transition-all ${
                   selectedPaymentMethod === 'cash'
-                    ? 'bg-espresso-950 text-crema'
+                    ? 'bg-espresso-950 text-amber-300 font-black shadow-xs'
                     : 'text-espresso-600 hover:text-espresso-900'
                 }`}
               >
@@ -634,9 +635,9 @@ export const PosView: React.FC = () => {
               </button>
               <button
                 onClick={() => setSelectedPaymentMethod('qris')}
-                className={`py-1.5 text-xs font-bold rounded-lg transition-all ${
+                className={`py-2 text-xs font-bold rounded-xl transition-all ${
                   selectedPaymentMethod === 'qris'
-                    ? 'bg-espresso-950 text-crema'
+                    ? 'bg-espresso-950 text-amber-300 font-black shadow-xs'
                     : 'text-espresso-600 hover:text-espresso-900'
                 }`}
               >
@@ -644,9 +645,9 @@ export const PosView: React.FC = () => {
               </button>
               <button
                 onClick={() => setSelectedPaymentMethod('debit')}
-                className={`py-1.5 text-xs font-bold rounded-lg transition-all ${
+                className={`py-2 text-xs font-bold rounded-xl transition-all ${
                   selectedPaymentMethod === 'debit'
-                    ? 'bg-espresso-950 text-crema'
+                    ? 'bg-espresso-950 text-amber-300 font-black shadow-xs'
                     : 'text-espresso-600 hover:text-espresso-900'
                 }`}
               >
@@ -670,7 +671,7 @@ export const PosView: React.FC = () => {
                       value={customCashInput}
                       onChange={(e) => setCustomCashInput(e.target.value)}
                       placeholder="0"
-                      className="w-full pl-10 pr-4 py-2.5 bg-white rounded-xl border border-espresso-200 text-lg font-black text-espresso-950 focus:outline-none focus:ring-2 focus:ring-crema font-display"
+                      className="w-full pl-10 pr-4 py-2.5 bg-white rounded-2xl border border-espresso-200 text-lg font-black text-espresso-950 focus:outline-none focus:border-amber-400 font-display"
                     />
                   </div>
                 </div>
@@ -679,25 +680,25 @@ export const PosView: React.FC = () => {
                 <div className="grid grid-cols-4 gap-2">
                   <button
                     onClick={() => setQuickCash(grandTotal)}
-                    className="py-2.5 md:py-3 px-1 rounded-2xl bg-oat-100 hover:bg-espresso-950 hover:text-crema text-espresso-800 text-xs md:text-sm font-bold transition-all text-center border border-espresso-200 active:scale-95 shadow-xs"
+                    className="py-2.5 px-1 rounded-2xl bg-oat-100 hover:bg-espresso-950 hover:text-amber-300 text-espresso-800 text-xs font-bold transition-all text-center border border-espresso-200 active:scale-95 shadow-xs"
                   >
                     Uang Pas
                   </button>
                   <button
                     onClick={() => setQuickCash(50000)}
-                    className="py-2.5 md:py-3 px-1 rounded-2xl bg-oat-100 hover:bg-espresso-950 hover:text-crema text-espresso-800 text-xs md:text-sm font-bold transition-all text-center border border-espresso-200 active:scale-95 shadow-xs"
+                    className="py-2.5 px-1 rounded-2xl bg-oat-100 hover:bg-espresso-950 hover:text-amber-300 text-espresso-800 text-xs font-bold transition-all text-center border border-espresso-200 active:scale-95 shadow-xs"
                   >
                     50.000
                   </button>
                   <button
                     onClick={() => setQuickCash(100000)}
-                    className="py-2.5 md:py-3 px-1 rounded-2xl bg-oat-100 hover:bg-espresso-950 hover:text-crema text-espresso-800 text-xs md:text-sm font-bold transition-all text-center border border-espresso-200 active:scale-95 shadow-xs"
+                    className="py-2.5 px-1 rounded-2xl bg-oat-100 hover:bg-espresso-950 hover:text-amber-300 text-espresso-800 text-xs font-bold transition-all text-center border border-espresso-200 active:scale-95 shadow-xs"
                   >
                     100.000
                   </button>
                   <button
                     onClick={() => setQuickCash(200000)}
-                    className="py-2.5 md:py-3 px-1 rounded-2xl bg-oat-100 hover:bg-espresso-950 hover:text-crema text-espresso-800 text-xs md:text-sm font-bold transition-all text-center border border-espresso-200 active:scale-95 shadow-xs"
+                    className="py-2.5 px-1 rounded-2xl bg-oat-100 hover:bg-espresso-950 hover:text-amber-300 text-espresso-800 text-xs font-bold transition-all text-center border border-espresso-200 active:scale-95 shadow-xs"
                   >
                     200.000
                   </button>
@@ -708,7 +709,7 @@ export const PosView: React.FC = () => {
                   className={`p-4 rounded-2xl border flex items-center justify-between transition-colors ${
                     isCashSufficient
                       ? 'bg-brew-light/40 border-brew/30 text-brew'
-                      : 'bg-ember-light/40 border-ember/30 text-ember-dark'
+                      : 'bg-ember-light/40 border-ember/30 text-ember'
                   }`}
                 >
                   <span className="text-xs md:text-sm font-bold">
@@ -725,7 +726,7 @@ export const PosView: React.FC = () => {
 
             {/* IF QRIS: Instant Code Scan */}
             {selectedPaymentMethod === 'qris' && (
-              <div className="text-center p-4 bg-oat-50 rounded-2xl border border-espresso-100 space-y-3">
+              <div className="text-center p-4 bg-oat-50 rounded-2xl border border-espresso-200 space-y-3">
                 <div className="w-40 h-40 bg-white p-2.5 rounded-2xl mx-auto border border-espresso-200 shadow-sm flex items-center justify-center">
                   <img
                     src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=00020101021226580014ID.LINKAJA.WWW011893600911002209121202150000000000000005204581253033605802ID5910KOD_COFFEE6007BANDUNG61054011562070703A01630489F3"
@@ -766,7 +767,7 @@ export const PosView: React.FC = () => {
                 type="button"
                 disabled={isSubmitting || (selectedPaymentMethod === 'cash' && !isCashSufficient)}
                 onClick={handleCompleteTransaction}
-                className="w-2/3 py-3 rounded-2xl bg-espresso-950 hover:bg-espresso-900 disabled:opacity-50 text-crema font-extrabold text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-95"
+                className="w-2/3 py-3 rounded-2xl bg-amber-400 hover:bg-amber-300 disabled:opacity-50 text-espresso-950 font-black text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-95"
               >
                 <CheckCircle2 className="w-4 h-4" />
                 <span>{isSubmitting ? 'Memproses...' : 'Selesaikan & Cetak Struk'}</span>
@@ -781,16 +782,16 @@ export const PosView: React.FC = () => {
       {/* ========================================================================= */}
       {isReceiptOpen && completedOrder && (
         <div className="fixed inset-0 z-50 bg-espresso-950/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-sm w-full p-6 border border-espresso-100 shadow-floating space-y-5">
+          <div className="bg-white rounded-3xl max-w-sm w-full p-6 border border-espresso-200 shadow-floating space-y-5 animate-slide-up">
             {/* Header Dialog */}
             <div className="flex items-center justify-between pb-2 border-b border-espresso-100">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-brew" />
-                <h3 className="font-extrabold text-sm text-espresso-950">Transaksi Berhasil!</h3>
+                <h3 className="font-black text-sm text-espresso-950 font-display">Transaksi Berhasil!</h3>
               </div>
               <button
                 onClick={() => setIsReceiptOpen(false)}
-                className="p-1 rounded-xl text-espresso-400 hover:text-espresso-900"
+                className="w-8 h-8 rounded-xl bg-espresso-100 hover:bg-espresso-200 text-espresso-700 flex items-center justify-center transition-colors"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -904,9 +905,9 @@ export const PosView: React.FC = () => {
             <div className="space-y-2">
               <button
                 onClick={() => window.print()}
-                className="w-full py-3 rounded-2xl bg-espresso-950 hover:bg-espresso-900 text-crema font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-95"
+                className="w-full py-3 rounded-2xl bg-espresso-950 hover:bg-espresso-900 text-amber-300 font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-95"
               >
-                <Printer className="w-4 h-4" />
+                <Printer className="w-4 h-4 text-amber-400" />
                 <span>Cetak Struk Thermal (Print)</span>
               </button>
 
