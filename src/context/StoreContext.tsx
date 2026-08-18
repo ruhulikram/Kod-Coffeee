@@ -233,11 +233,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     customerPhone?: string,
     notes?: string
   ): Promise<Order> => {
-    if (!currentTable) {
-      throw new Error('Table context is missing. Please scan a table QR code.');
-    }
     if (cart.length === 0) {
-      throw new Error('Cart is empty.');
+      throw new Error('Keranjang pesanan masih kosong.');
     }
 
     const orderSeq = orders.length + 1001;
@@ -247,7 +244,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const newOrder: Order = {
       id: orderId,
       order_number: orderNumber,
-      table_id: currentTable.id,
+      table_id: currentTable?.id,
       customer_name: customerName || 'Guest',
       customer_phone: customerPhone || '',
       subtotal: cartSubtotal,
@@ -269,11 +266,13 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         subtotal: item.menu.price * item.quantity,
         image: item.menu.image,
       })),
-      table: currentTable,
+      table: currentTable || undefined,
     };
 
-    // Mark table as occupied
-    updateTableStatus(currentTable.id, 'occupied');
+    // Mark table as occupied if table exists
+    if (currentTable) {
+      updateTableStatus(currentTable.id, 'occupied');
+    }
 
     setOrders((prev) => [newOrder, ...prev]);
     clearCart();
@@ -402,7 +401,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       prev.map((o) => {
         if (o.id === orderId) {
           // If completed or cancelled, check if table should be made available
-          if (newStatus === 'completed' || newStatus === 'cancelled') {
+          if ((newStatus === 'completed' || newStatus === 'cancelled') && o.table_id) {
             const hasOtherActiveOrders = prev.some(
               (other) => other.table_id === o.table_id && other.id !== o.id && !['completed', 'cancelled'].includes(other.order_status)
             );

@@ -130,14 +130,14 @@ export const OrderStatusView: React.FC<OrderStatusViewProps> = ({
             <div className="mt-3 p-3 rounded-2xl bg-brew/20 border border-brew/40 text-brew-light text-xs flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-crema flex-shrink-0" />
               <span className="font-semibold">
-                Pesanan Anda telah selesai diracik dan sedang diantarkan ke {order.table?.table_number}!
+                Pesanan Anda telah selesai diracik dan siap disajikan!
               </span>
             </div>
           )}
 
           {order.order_status === 'preparing' && (
             <p className="text-xs text-espresso-300 mt-2 leading-relaxed">
-              Barista kami sedang melakukan ekstraksi kopi dan menyiapkan hidangan dengan seksama. Mohon tunggu sejenak di meja.
+              Barista kami sedang melakukan ekstraksi kopi dan menyiapkan hidangan dengan seksama. Mohon ditunggu sejenak.
             </p>
           )}
         </div>

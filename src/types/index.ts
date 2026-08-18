@@ -94,7 +94,7 @@ export interface Payment {
 export interface Order {
   id: string;
   order_number: string;
-  table_id: string;
+  table_id?: string;
   order_type?: 'dine_in' | 'takeaway';
   customer_name?: string;
   customer_phone?: string;

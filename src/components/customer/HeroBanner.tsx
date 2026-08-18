@@ -1,56 +1,182 @@
-import React from 'react';
-import { Sparkles, MapPin, Coffee } from 'lucide-react';
-import { useStore } from '../../context/StoreContext';
+import React, { useState, useEffect, useRef } from 'react';
+import { Sparkles, Tag, ArrowRight, Flame, Award } from 'lucide-react';
 
-interface HeroBannerProps {
-  onOpenTableSelector: () => void;
+interface PromoSlide {
+  id: string;
+  tag: string;
+  tagIcon: 'sparkle' | 'promo' | 'fire' | 'award';
+  title: string;
+  subtitle: string;
+  highlightText: string;
+  image: string;
+  ctaText?: string;
 }
 
-export const HeroBanner: React.FC<HeroBannerProps> = ({
-  onOpenTableSelector,
-}) => {
-  const { currentTable } = useStore();
+const PROMO_SLIDES: PromoSlide[] = [
+  {
+    id: 'promo-1',
+    tag: 'PROMO SPESIAL HARI INI',
+    tagIcon: 'promo',
+    title: 'Diskon 20% Kod Palm Latte',
+    subtitle: 'Signature espresso dengan gula aren organik & whipped cream lembut.',
+    highlightText: 'Hemat s/d Rp 8.000',
+    image: '/images/latte.jpg',
+    ctaText: 'Pesan Sekarang',
+  },
+  {
+    id: 'promo-2',
+    tag: 'ARTISAN ROASTERY',
+    tagIcon: 'sparkle',
+    title: 'Single Origin Gayo & Toraja',
+    subtitle: 'Biji kopi pilihan sangrai mingguan dengan profil rasa kompleks & floral.',
+    highlightText: 'Fresh Roast 100% Arabica',
+    image: '/images/hero.jpg',
+    ctaText: 'Cek Manual Brew',
+  },
+  {
+    id: 'promo-3',
+    tag: 'COMBO HEMAT',
+    tagIcon: 'fire',
+    title: 'Paket Kopi + Pastry Croissant',
+    subtitle: 'Nikmati Butter Croissant renyah bersama secangkir Hot Cappuccino hangat.',
+    highlightText: 'Hanya Rp 45.000',
+    image: '/images/pastry.jpg',
+    ctaText: 'Lihat Menu',
+  },
+  {
+    id: 'promo-4',
+    tag: 'KOD COFFEE EXPERIENCE',
+    tagIcon: 'award',
+    title: 'Scan, Pesan & Santai di Meja',
+    subtitle: 'Pesanan diantar langsung ke meja Anda tanpa perlu antre di kasir.',
+    highlightText: 'Pelayanan Cepat & Higienis',
+    image: '/images/hero.jpg',
+    ctaText: 'Eksplor Menu',
+  },
+];
+
+export const HeroBanner: React.FC = () => {
+  const [currentIdx, setCurrentIdx] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+
+  // Auto slide interval (4.5 seconds)
+  useEffect(() => {
+    if (isPaused) return;
+
+    const timer = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % PROMO_SLIDES.length);
+    }, 4500);
+
+    return () => clearInterval(timer);
+  }, [isPaused]);
+
+  // Touch Swipe Handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    setIsPaused(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current !== null && touchEndX.current !== null) {
+      const diff = touchStartX.current - touchEndX.current;
+      // Min swipe threshold 50px
+      if (diff > 50) {
+        // Swiped Left -> Next slide
+        setCurrentIdx((prev) => (prev + 1) % PROMO_SLIDES.length);
+      } else if (diff < -50) {
+        // Swiped Right -> Prev slide
+        setCurrentIdx((prev) => (prev - 1 + PROMO_SLIDES.length) % PROMO_SLIDES.length);
+      }
+    }
+    touchStartX.current = null;
+    touchEndX.current = null;
+    setIsPaused(false);
+  };
+
+  const currentSlide = PROMO_SLIDES[currentIdx];
+
+  const renderTagIcon = (type: PromoSlide['tagIcon']) => {
+    switch (type) {
+      case 'promo':
+        return <Tag className="w-3.5 h-3.5 text-amber-400" />;
+      case 'fire':
+        return <Flame className="w-3.5 h-3.5 text-amber-400" />;
+      case 'award':
+        return <Award className="w-3.5 h-3.5 text-amber-400" />;
+      case 'sparkle':
+      default:
+        return <Sparkles className="w-3.5 h-3.5 text-amber-400" />;
+    }
+  };
 
   return (
-    <div className="relative overflow-hidden bg-espresso-950 text-white rounded-3xl mx-4 mt-3 shadow-md border border-espresso-800">
-      {/* Background Image with Gradient Overlay */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="/images/hero.jpg"
-          alt="Kod Coffee Bar"
-          className="w-full h-full object-cover object-center opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-espresso-950 via-espresso-950/85 to-espresso-900/60" />
-      </div>
-
-      <div className="relative z-10 p-4 sm:p-5 flex items-center justify-between gap-3">
-        {/* Left: Brand Identity & Tagline */}
-        <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-2xl bg-amber-400 text-espresso-950 flex items-center justify-center font-bold shrink-0 shadow-sm">
-            <Coffee className="w-6 h-6" />
+    <div
+      className="relative overflow-hidden bg-espresso-950 text-white rounded-3xl mx-4 mt-3 max-w-4xl sm:mx-auto shadow-elevated border border-espresso-800 select-none group"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
+      {/* Background Image Carousel Container */}
+      <div className="relative h-48 sm:h-56 md:h-64 w-full overflow-hidden">
+        {PROMO_SLIDES.map((slide, idx) => (
+          <div
+            key={slide.id}
+            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+              idx === currentIdx ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+            }`}
+          >
+            <img
+              src={slide.image}
+              alt={slide.title}
+              className="w-full h-full object-cover object-center transform scale-105 transition-transform duration-7000 ease-out"
+            />
+            {/* Rich Gradient Overlay for strong typography contrast */}
+            <div className="absolute inset-0 bg-gradient-to-r from-espresso-950 via-espresso-950/85 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-espresso-950/90 via-transparent to-black/30" />
           </div>
-          <div>
-            <div className="flex items-center gap-1.5">
-              <h1 className="font-black text-base sm:text-lg tracking-tight text-white font-display">
-                KOD<span className="text-amber-400">COFFEE</span>
-              </h1>
-              <span className="text-[9px] uppercase tracking-wider font-black px-1.5 py-0.5 rounded bg-amber-400 text-espresso-950 shadow-xs">
-                Specialty
+        ))}
+
+        {/* Slide Content Layer */}
+        <div className="relative z-20 h-full p-5 sm:p-7 flex flex-col justify-between max-w-xl">
+          {/* Top Tag */}
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-espresso-900/90 border border-amber-400/40 text-amber-300 text-[10px] sm:text-xs font-black tracking-wider uppercase backdrop-blur-md shadow-2xs">
+              {renderTagIcon(currentSlide.tagIcon)}
+              <span>{currentSlide.tag}</span>
+            </span>
+          </div>
+
+          {/* Main Headline & Description */}
+          <div className="space-y-1.5 sm:space-y-2">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-black text-white font-display leading-tight tracking-tight drop-shadow-md">
+              {currentSlide.title}
+            </h2>
+            <p className="text-xs sm:text-sm text-espresso-200 line-clamp-2 max-w-md font-medium leading-relaxed drop-shadow-sm">
+              {currentSlide.subtitle}
+            </p>
+          </div>
+
+          {/* Bottom Highlight & Quick Info */}
+          <div className="flex items-center gap-3 pt-1">
+            <span className="text-[11px] sm:text-xs font-black text-amber-400 bg-amber-400/15 border border-amber-400/30 px-3 py-1 rounded-xl">
+              {currentSlide.highlightText}
+            </span>
+            {currentSlide.ctaText && (
+              <span className="text-xs text-white/90 font-bold flex items-center gap-1 opacity-90 group-hover:opacity-100 transition-opacity">
+                <span>{currentSlide.ctaText}</span>
+                <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
               </span>
-            </div>
-            <p className="text-[11px] text-espresso-200 font-medium">Artisan Roastery & Table Bar</p>
+            )}
           </div>
         </div>
-
-        {/* Right: Interactive Table Badge */}
-        <button
-          onClick={onOpenTableSelector}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-espresso-900/90 hover:bg-espresso-800 border border-espresso-700 text-white text-xs font-extrabold shadow-sm transition-all active:scale-95 shrink-0"
-          title="Klik untuk ubah nomor meja"
-        >
-          <MapPin className="w-3.5 h-3.5 text-amber-400" />
-          <span>{currentTable ? currentTable.table_number : 'Pilih Meja'}</span>
-        </button>
       </div>
     </div>
   );
